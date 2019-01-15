@@ -63,6 +63,7 @@ std::vector<KMeans::Point> &KMeans::computeCentroids (std::vector<Point> &points
     }
     return centroids;
 }
+
 void KMeans::relabelPoint (Point &p, std::vector<KMeans::Point> &centroids){
     for (auto it = centroids.begin(); it != centroids.end(); ++it){
         double newDistance = p.distanceTo(*it);
@@ -73,8 +74,8 @@ void KMeans::relabelPoint (Point &p, std::vector<KMeans::Point> &centroids){
         }
     }
 }
+
 void KMeans::randomizeLabel (std::vector <Point> &points){
-    
     int label = 0;
     for (int front = 0, back = static_cast<int>(points.size() - 1); front - 1 < back; ++front, --back){
         points[front].centroidLabel = (label % K) + 1;
@@ -85,6 +86,15 @@ void KMeans::randomizeLabel (std::vector <Point> &points){
     
     }
 
+}
+std::vector<KMeans::Point> & KMeans::readPoints(std::string pointFileLocation, int clusterCount, std::ostream &out){
+    std::ifstream pointFile (pointFileLocation);
+    static std::vector<KMeans::Point> points;
+    int x, y;
+    while (pointFile >> x >> y)
+        points.push_back({static_cast<double>(x),static_cast<double>(y), INT_MAX, INT_MAX});
+    
+    return KMeans::cluster(points, clusterCount, 35, 40, out);
 }
 
 

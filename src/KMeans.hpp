@@ -42,7 +42,8 @@ public:
             return (distX + distY);
         }
     };
-    static std::vector<Point> &cluster (const std::vector<Point> &points, int rows, int cols, int K, std::ostream &out);
+    static std::vector<Point> &readPoints(std::string pointFileLocation, int clusterCount, std::ostream &out);
+    static std::vector<Point> &cluster  (const std::vector<Point> &points, int clusterCount, int rows, int cols, std::ostream &out);
     
 
 };
